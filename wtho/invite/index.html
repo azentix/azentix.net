@@ -56,29 +56,19 @@
 
   <script>
     (function() {
-      var params = new URLSearchParams(window.location.search);
-      var eventId = params.get('eventId') || '';
       var ua = navigator.userAgent || '';
       var isIOS = /iPhone|iPad|iPod/i.test(ua);
-      var isAndroid = /Android/i.test(ua);
-      var platform = isIOS ? 'ios' : (isAndroid ? 'android' : 'unknown');
 
-      // Redirect to Cloud Function which logs the click and redirects to the correct store
-      var redirectUrl = 'https://us-central1-whotohangout-7df67.cloudfunctions.net/handleInviteLink'
-        + '?eventId=' + encodeURIComponent(eventId)
-        + '&platform=' + platform;
+      var storeUrl = isIOS
+        ? 'https://apps.apple.com/app/who-to-hangout/id6753943435'
+        : 'https://play.google.com/store/apps/details?id=com.azentix.v2.wtho';
 
-      // Also set the direct store link as fallback
-      var storeLink = document.getElementById('store-link');
-      if (isIOS) {
-        storeLink.href = 'https://apps.apple.com/app/who-to-hangout/id6753943435';
-      } else {
-        storeLink.href = 'https://play.google.com/store/apps/details?id=com.azentix.v2.wtho';
-      }
+      // Set button link
+      document.getElementById('store-link').href = storeUrl;
 
       // Auto-redirect after short delay
       setTimeout(function() {
-        window.location.href = redirectUrl;
+        window.location.href = storeUrl;
       }, 1500);
     })();
   </script>
