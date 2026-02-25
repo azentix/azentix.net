@@ -4,55 +4,306 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Who To Hangout — Event Invitation</title>
+  <meta name="theme-color" content="#0081A7">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
-      color: #fff;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 24px;
+      overflow: hidden;
+      background: #0081A7;
+      background: linear-gradient(160deg, #006B8A 0%, #0081A7 35%, #00AFB9 70%, #4DC3CC 100%);
     }
-    .container { max-width: 400px; }
-    h1 { font-size: 28px; margin-bottom: 12px; }
-    p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; }
-    .spinner {
-      width: 40px; height: 40px;
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
+
+    /* Animated background circles */
+    .bg-circles {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .bg-circles .circle {
+      position: absolute;
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 24px;
+      opacity: 0.08;
+      background: #FDFCDC;
+    }
+    .bg-circles .c1 {
+      width: 300px; height: 300px;
+      top: -80px; right: -60px;
+      animation: float 8s ease-in-out infinite;
+    }
+    .bg-circles .c2 {
+      width: 200px; height: 200px;
+      bottom: -40px; left: -40px;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    .bg-circles .c3 {
+      width: 150px; height: 150px;
+      top: 40%; left: -30px;
+      animation: float 12s ease-in-out infinite 2s;
+    }
+    .bg-circles .c4 {
+      width: 100px; height: 100px;
+      top: 20%; right: 10%;
+      opacity: 0.05;
+      animation: float 9s ease-in-out infinite 1s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-20px) scale(1.05); }
+    }
+
+    .container {
+      max-width: 380px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Logo */
+    .logo-wrap {
+      margin-bottom: 28px;
+      animation: fadeDown 0.6s ease-out;
+    }
+    .logo {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+    .logo-inner {
+      width: 88px;
+      height: 88px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .logo svg {
+      width: 52px;
+      height: 52px;
+    }
+
+    .app-name {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.3px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Card */
+    .card {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 24px;
+      padding: 32px 24px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+      animation: fadeUp 0.6s ease-out 0.15s both;
+    }
+
+    /* Loading state */
+    .status-text {
+      font-size: 17px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+    .status-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 24px;
+    }
+
+    /* Custom spinner */
+    .spinner-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      position: relative;
+    }
+    .spinner::before,
+    .spinner::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+    }
+    .spinner::before {
+      width: 100%;
+      height: 100%;
+      border: 3px solid rgba(255,255,255,0.15);
+    }
+    .spinner::after {
+      width: 100%;
+      height: 100%;
+      border: 3px solid transparent;
+      border-top-color: #FDFCDC;
+      border-right-color: #FDFCDC;
+      animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .btn {
-      display: inline-block;
-      padding: 14px 32px;
+
+    /* Store section */
+    .store-section {
+      display: none;
+      animation: fadeUp 0.4s ease-out;
+    }
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin: 24px 0;
+    }
+    .store-label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 16px;
+    }
+
+    /* Download button */
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
       background: #fff;
-      color: #1565C0;
+      color: #0081A7;
       font-size: 16px;
       font-weight: 600;
-      border-radius: 12px;
+      letter-spacing: 0.3px;
+      border-radius: 16px;
       text-decoration: none;
-      margin: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .btn:hover { opacity: 0.9; }
-    .store-links { margin-top: 16px; display: none; }
-    .subtitle { font-size: 14px; opacity: 0.7; margin-top: 16px; }
+    .btn-download:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .btn-download svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Not found state */
+    .not-found .status-text {
+      color: #FDFCDC;
+    }
+
+    /* Pulse dot */
+    .pulse-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #FDFCDC;
+      border-radius: 50%;
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 32px;
+      animation: fadeUp 0.6s ease-out 0.3s both;
+    }
+    .footer-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
+
+  <div class="bg-circles">
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
+    <div class="circle c3"></div>
+    <div class="circle c4"></div>
+  </div>
+
   <div class="container">
-    <h1>Who To Hangout</h1>
-    <p id="status">Opening the app...</p>
-    <div class="spinner" id="spinner"></div>
-    <div class="store-links" id="store-section">
-      <p>App not installed?</p>
-      <a class="btn" id="store-link" href="#">Download App</a>
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <div class="logo">
+        <div class="logo-inner">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Three people icon -->
+            <circle cx="26" cy="16" r="6" fill="white"/>
+            <circle cx="14" cy="20" r="5" fill="rgba(255,255,255,0.75)"/>
+            <circle cx="38" cy="20" r="5" fill="rgba(255,255,255,0.75)"/>
+            <path d="M16 36c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <path d="M6 38c0-4.418 3.582-8 8-8" stroke="rgba(255,255,255,0.75)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M46 38c0-4.418-3.582-8-8-8" stroke="rgba(255,255,255,0.75)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+      <div class="app-name">Who To Hangout</div>
+    </div>
+
+    <!-- Main card -->
+    <div class="card" id="card">
+      <div id="loading-state">
+        <p class="status-text" id="status">Opening the app<span class="pulse-dot"></span></p>
+        <p class="status-sub">Redirecting you to the event</p>
+        <div class="spinner-wrap">
+          <div class="spinner"></div>
+        </div>
+      </div>
+
+      <div class="store-section" id="store-section">
+        <p class="status-text">App not installed</p>
+        <p class="status-sub">Download Who To Hangout to view this event and connect with people nearby</p>
+        <div class="divider"></div>
+        <a class="btn-download" id="store-link" href="#">
+          <svg viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 2a1 1 0 011 1v8.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L9 11.586V3a1 1 0 011-1z"/>
+            <path d="M4 14a1 1 0 011 1v1h10v-1a1 1 0 112 0v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 011-1z"/>
+          </svg>
+          Download App
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p class="footer-text">Find events and people around you</p>
     </div>
   </div>
 
@@ -68,24 +319,32 @@
 
       document.getElementById('store-link').href = storeUrl;
 
+      function showNotInstalled() {
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('store-section').style.display = 'block';
+        document.getElementById('card').classList.add('not-found');
+      }
+
       // For Android: intent:// opens app if installed, Play Store if not
       if (isAndroid) {
         var intentUrl = 'intent://azentix.net/wtho/invite' + window.location.search +
           '#Intent;scheme=https;package=com.azentix.v2.wtho;end';
         window.location.href = intentUrl;
+
+        // Fallback: if intent didn't work after 3s, show store button
+        setTimeout(function() {
+          showNotInstalled();
+        }, 3000);
         return;
       }
 
       // For iOS and others: wait and check if the app opened.
-      // If the page goes to background (app opened), cancel store redirect.
       var redirectTimer = setTimeout(function() {
-        document.getElementById('status').textContent = "App not found. Redirecting to store...";
-        document.getElementById('spinner').style.display = 'none';
-        document.getElementById('store-section').style.display = 'block';
-        // Auto-redirect to store
+        showNotInstalled();
+        // Auto-redirect to store after showing button
         setTimeout(function() {
           window.location.href = storeUrl;
-        }, 1500);
+        }, 2000);
       }, 2500);
 
       // Cancel redirect if page becomes hidden (app opened successfully)
