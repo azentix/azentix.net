@@ -2,68 +2,134 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Who To Hangout — Event Invitation</title>
   <meta name="theme-color" content="#0081A7">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
+      min-height: -webkit-fill-available;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 24px;
+      padding-top: env(safe-area-inset-top, 24px);
+      padding-bottom: env(safe-area-inset-bottom, 24px);
       overflow: hidden;
-      background: #0081A7;
-      background: linear-gradient(160deg, #006B8A 0%, #0081A7 35%, #00AFB9 70%, #4DC3CC 100%);
+      background: #005A74;
+      background: linear-gradient(160deg, #004D66 0%, #0081A7 30%, #00AFB9 65%, #4DC3CC 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 15s ease-in-out infinite;
     }
 
-    /* Animated background circles */
-    .bg-circles {
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Liquid blobs */
+    .bg-blobs {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none;
       overflow: hidden;
       z-index: 0;
     }
-    .bg-circles .circle {
+    .blob {
       position: absolute;
       border-radius: 50%;
-      opacity: 0.08;
-      background: #FDFCDC;
+      filter: blur(50px);
     }
-    .bg-circles .c1 {
+    .b1 {
+      width: 350px; height: 350px;
+      top: -120px; right: -100px;
+      background: radial-gradient(circle, rgba(253,252,220,0.2) 0%, rgba(0,175,185,0.06) 70%);
+      animation: morph1 10s ease-in-out infinite;
+    }
+    .b2 {
       width: 300px; height: 300px;
-      top: -80px; right: -60px;
-      animation: float 8s ease-in-out infinite;
+      bottom: -80px; left: -100px;
+      background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, rgba(0,129,167,0.04) 70%);
+      animation: morph2 13s ease-in-out infinite;
     }
-    .bg-circles .c2 {
-      width: 200px; height: 200px;
-      bottom: -40px; left: -40px;
-      animation: float 10s ease-in-out infinite reverse;
+    .b3 {
+      width: 220px; height: 220px;
+      top: 30%; left: -50px;
+      background: radial-gradient(circle, rgba(77,195,204,0.18) 0%, transparent 70%);
+      animation: morph3 15s ease-in-out infinite;
     }
-    .bg-circles .c3 {
-      width: 150px; height: 150px;
-      top: 40%; left: -30px;
-      animation: float 12s ease-in-out infinite 2s;
+    .b4 {
+      width: 180px; height: 180px;
+      top: 10%; right: 0;
+      background: radial-gradient(circle, rgba(253,252,220,0.12) 0%, transparent 70%);
+      animation: morph1 12s ease-in-out infinite 4s;
     }
-    .bg-circles .c4 {
-      width: 100px; height: 100px;
-      top: 20%; right: 10%;
-      opacity: 0.05;
-      animation: float 9s ease-in-out infinite 1s;
+    .b5 {
+      width: 140px; height: 140px;
+      bottom: 20%; right: -40px;
+      background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%);
+      animation: morph2 10s ease-in-out infinite 2s;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-20px) scale(1.05); }
+    @keyframes morph1 {
+      0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 50%; }
+      25% { transform: translate(20px, -25px) scale(1.1) rotate(8deg); border-radius: 42% 58% 48% 52%; }
+      50% { transform: translate(-5px, 15px) scale(0.95) rotate(-4deg); border-radius: 55% 45% 52% 48%; }
+      75% { transform: translate(-15px, -10px) scale(1.05) rotate(3deg); border-radius: 48% 52% 56% 44%; }
+    }
+    @keyframes morph2 {
+      0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 50%; }
+      25% { transform: translate(-25px, 20px) scale(1.12) rotate(-6deg); border-radius: 52% 48% 42% 58%; }
+      50% { transform: translate(15px, -20px) scale(0.9) rotate(5deg); border-radius: 46% 54% 58% 42%; }
+      75% { transform: translate(10px, 10px) scale(1.08) rotate(-2deg); border-radius: 56% 44% 46% 54%; }
+    }
+    @keyframes morph3 {
+      0%, 100% { transform: translate(0, 0) scale(1); border-radius: 50%; }
+      33% { transform: translate(25px, -15px) scale(1.15); border-radius: 44% 56% 50% 50%; }
+      66% { transform: translate(-15px, 20px) scale(0.9); border-radius: 56% 44% 48% 52%; }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+    }
+    .p1 { top: 15%; left: 20%; animation: particleFloat 7s ease-in-out infinite; }
+    .p2 { top: 70%; left: 75%; animation: particleFloat 9s ease-in-out infinite 1s; width: 3px; height: 3px; }
+    .p3 { top: 40%; left: 85%; animation: particleFloat 8s ease-in-out infinite 2s; width: 5px; height: 5px; opacity: 0.15; }
+    .p4 { top: 80%; left: 15%; animation: particleFloat 11s ease-in-out infinite 3s; width: 3px; height: 3px; }
+    .p5 { top: 25%; left: 60%; animation: particleFloat 10s ease-in-out infinite 0.5s; width: 2px; height: 2px; opacity: 0.35; }
+    .p6 { top: 55%; left: 10%; animation: particleFloat 8s ease-in-out infinite 4s; width: 4px; height: 4px; opacity: 0.2; }
+    .p7 { top: 85%; left: 50%; animation: particleFloat 12s ease-in-out infinite 1.5s; width: 3px; height: 3px; }
+    .p8 { top: 10%; left: 45%; animation: particleFloat 9s ease-in-out infinite 2.5s; width: 2px; height: 2px; opacity: 0.3; }
+
+    @keyframes particleFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+      25% { transform: translate(15px, -25px) scale(1.5); opacity: 0.4; }
+      50% { transform: translate(-10px, -40px) scale(1); opacity: 0.15; }
+      75% { transform: translate(20px, -15px) scale(1.3); opacity: 0.35; }
     }
 
     .container {
-      max-width: 380px;
+      max-width: 360px;
       width: 100%;
       position: relative;
       z-index: 1;
@@ -71,113 +137,196 @@
 
     /* Logo */
     .logo-wrap {
-      margin-bottom: 28px;
-      animation: fadeDown 0.6s ease-out;
+      margin-bottom: 24px;
+      animation: logoAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
     }
+    @keyframes logoAppear {
+      from { opacity: 0; transform: translateY(-30px) scale(0.8); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
     .logo {
-      width: 88px;
-      height: 88px;
-      margin: 0 auto 16px;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 14px;
       position: relative;
     }
+    /* Glow ring around logo */
+    .logo::before {
+      content: '';
+      position: absolute;
+      top: -6px; left: -6px; right: -6px; bottom: -6px;
+      border-radius: 26px;
+      background: conic-gradient(
+        from 0deg,
+        rgba(253,252,220,0.3),
+        rgba(0,175,185,0.1),
+        rgba(255,255,255,0.3),
+        rgba(77,195,204,0.1),
+        rgba(253,252,220,0.3)
+      );
+      animation: glowRotate 6s linear infinite;
+      filter: blur(4px);
+    }
+    @keyframes glowRotate {
+      to { transform: rotate(360deg); }
+    }
+
     .logo-inner {
-      width: 88px;
-      height: 88px;
+      width: 80px;
+      height: 80px;
       border-radius: 22px;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.25);
+      background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.08) 100%);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border: 1.5px solid rgba(255,255,255,0.4);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.4),
+        inset 0 -1px 0 rgba(0,0,0,0.05);
+      position: relative;
+      z-index: 1;
+      animation: logoBreath 4s ease-in-out infinite;
     }
+    @keyframes logoBreath {
+      0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.05); }
+      50% { box-shadow: 0 12px 40px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.05), 0 0 20px rgba(253,252,220,0.1); }
+    }
+
     .logo svg {
-      width: 52px;
-      height: 52px;
+      width: 46px;
+      height: 46px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
     }
 
     .app-name {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
       color: #fff;
       letter-spacing: 0.3px;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      text-shadow: 0 2px 16px rgba(0,0,0,0.15);
     }
 
-    /* Card */
+    /* Glass Card */
     .card {
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: linear-gradient(145deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 100%);
+      backdrop-filter: blur(32px) saturate(1.8);
+      -webkit-backdrop-filter: blur(32px) saturate(1.8);
+      border: 1.5px solid rgba(255,255,255,0.35);
       border-radius: 24px;
-      padding: 32px 24px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
-      animation: fadeUp 0.6s ease-out 0.15s both;
+      padding: 28px 24px;
+      box-shadow:
+        0 8px 48px rgba(0,0,0,0.08),
+        0 2px 8px rgba(0,0,0,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.5),
+        inset 0 -1px 0 rgba(0,0,0,0.04);
+      animation: cardAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes cardAppear {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Glass shine sweep */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -100%;
+      width: 80%;
+      height: 200%;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 45%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.12) 55%, transparent 60%);
+      animation: shineSweep 4s ease-in-out infinite 1.5s;
+      pointer-events: none;
+    }
+    @keyframes shineSweep {
+      0%, 100% { left: -100%; }
+      50% { left: 200%; }
+    }
+
+    /* Top highlight */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      pointer-events: none;
     }
 
     /* Loading state */
     .status-text {
       font-size: 17px;
-      font-weight: 500;
+      font-weight: 600;
       color: #fff;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       letter-spacing: 0.2px;
+      position: relative;
+      animation: textFadeIn 0.5s ease-out 0.7s both;
     }
     .status-sub {
       font-size: 14px;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 24px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 22px;
+      line-height: 1.4;
+      animation: textFadeIn 0.5s ease-out 0.85s both;
+    }
+    @keyframes textFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Custom spinner */
     .spinner-wrap {
       display: flex;
       justify-content: center;
-      margin-bottom: 4px;
+      animation: textFadeIn 0.5s ease-out 1s both;
     }
     .spinner {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       position: relative;
     }
     .spinner::before,
     .spinner::after {
       content: '';
       position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
     }
     .spinner::before {
-      width: 100%;
-      height: 100%;
-      border: 3px solid rgba(255,255,255,0.15);
+      border: 2.5px solid rgba(255,255,255,0.1);
     }
     .spinner::after {
-      width: 100%;
-      height: 100%;
-      border: 3px solid transparent;
-      border-top-color: #FDFCDC;
-      border-right-color: #FDFCDC;
-      animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      border: 2.5px solid transparent;
+      border-top-color: rgba(253,252,220,0.9);
+      border-right-color: rgba(253,252,220,0.3);
+      animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: drop-shadow(0 0 4px rgba(253,252,220,0.3));
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* Store section */
     .store-section {
       display: none;
-      animation: fadeUp 0.4s ease-out;
+      animation: storeAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
     }
+    @keyframes storeAppear {
+      from { opacity: 0; transform: scale(0.9) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
     .divider {
       height: 1px;
-      background: rgba(255,255,255,0.15);
-      margin: 24px 0;
-    }
-    .store-label {
-      font-size: 14px;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 16px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+      margin: 20px 0;
     }
 
     /* Download button */
@@ -185,20 +334,38 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 28px;
-      background: #fff;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
       color: #0081A7;
       font-size: 16px;
       font-weight: 600;
       letter-spacing: 0.3px;
       border-radius: 16px;
       text-decoration: none;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      box-shadow:
+        0 4px 20px rgba(0,0,0,0.1),
+        0 1px 3px rgba(0,0,0,0.06),
+        inset 0 1px 0 rgba(255,255,255,1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-download::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -100%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(105deg, transparent 40%, rgba(0,129,167,0.06) 50%, transparent 60%);
+      animation: btnShine 3s ease-in-out infinite 2s;
+    }
+    @keyframes btnShine {
+      0%, 100% { left: -100%; }
+      50% { left: 200%; }
     }
     .btn-download:active {
-      transform: scale(0.97);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transform: scale(0.96);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     .btn-download svg {
       width: 20px;
@@ -206,56 +373,60 @@
       flex-shrink: 0;
     }
 
-    /* Not found state */
-    .not-found .status-text {
-      color: #FDFCDC;
-    }
-
     /* Pulse dot */
     .pulse-dot {
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: #FDFCDC;
       border-radius: 50%;
-      margin-left: 4px;
+      margin-left: 6px;
       vertical-align: middle;
+      box-shadow: 0 0 10px rgba(253,252,220,0.6);
       animation: pulse 1.5s ease-in-out infinite;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(253,252,220,0.6); }
+      50% { opacity: 0.3; transform: scale(0.5); box-shadow: 0 0 3px rgba(253,252,220,0.2); }
     }
 
     /* Footer */
     .footer {
-      margin-top: 32px;
-      animation: fadeUp 0.6s ease-out 0.3s both;
+      margin-top: 28px;
+      animation: fadeUp 0.7s ease-out 0.6s both;
     }
     .footer-text {
       font-size: 13px;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.3);
       line-height: 1.5;
+      letter-spacing: 0.3px;
     }
 
-    /* Animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-16px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-circles">
-    <div class="circle c1"></div>
-    <div class="circle c2"></div>
-    <div class="circle c3"></div>
-    <div class="circle c4"></div>
+  <div class="bg-blobs">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="blob b4"></div>
+    <div class="blob b5"></div>
+  </div>
+
+  <div class="particles">
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
+    <div class="particle p6"></div>
+    <div class="particle p7"></div>
+    <div class="particle p8"></div>
   </div>
 
   <div class="container">
@@ -264,20 +435,19 @@
       <div class="logo">
         <div class="logo-inner">
           <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Three people icon -->
-            <circle cx="26" cy="16" r="6" fill="white"/>
-            <circle cx="14" cy="20" r="5" fill="rgba(255,255,255,0.75)"/>
-            <circle cx="38" cy="20" r="5" fill="rgba(255,255,255,0.75)"/>
+            <circle cx="26" cy="15" r="6" fill="white"/>
+            <circle cx="14" cy="19.5" r="5" fill="rgba(255,255,255,0.7)"/>
+            <circle cx="38" cy="19.5" r="5" fill="rgba(255,255,255,0.7)"/>
             <path d="M16 36c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
-            <path d="M6 38c0-4.418 3.582-8 8-8" stroke="rgba(255,255,255,0.75)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <path d="M46 38c0-4.418-3.582-8-8-8" stroke="rgba(255,255,255,0.75)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M6 38c0-4.418 3.582-8 8-8" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M46 38c0-4.418-3.582-8-8-8" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
           </svg>
         </div>
       </div>
       <div class="app-name">Who To Hangout</div>
     </div>
 
-    <!-- Main card -->
+    <!-- Glass card -->
     <div class="card" id="card">
       <div id="loading-state">
         <p class="status-text" id="status">Opening the app<span class="pulse-dot"></span></p>
@@ -331,30 +501,26 @@
           '#Intent;scheme=https;package=com.azentix.v2.wtho;end';
         window.location.href = intentUrl;
 
-        // Fallback: if intent didn't work after 3s, show store button
         setTimeout(function() {
           showNotInstalled();
         }, 3000);
         return;
       }
 
-      // For iOS and others: wait and check if the app opened.
+      // For iOS and others
       var redirectTimer = setTimeout(function() {
         showNotInstalled();
-        // Auto-redirect to store after showing button
         setTimeout(function() {
           window.location.href = storeUrl;
         }, 2000);
       }, 2500);
 
-      // Cancel redirect if page becomes hidden (app opened successfully)
       document.addEventListener('visibilitychange', function() {
         if (document.hidden) {
           clearTimeout(redirectTimer);
         }
       });
 
-      // Also cancel on blur (some browsers fire this instead)
       window.addEventListener('blur', function() {
         clearTimeout(redirectTimer);
       });
