@@ -20,15 +20,6 @@
     .container { max-width: 400px; }
     h1 { font-size: 28px; margin-bottom: 12px; }
     p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; }
-    .spinner {
-      width: 40px; height: 40px;
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 24px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
     .btn {
       display: inline-block;
       padding: 14px 32px;
@@ -42,16 +33,17 @@
     }
     .btn:hover { opacity: 0.9; }
     .store-links { margin-top: 16px; }
+    .subtitle { font-size: 14px; opacity: 0.7; margin-top: 16px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Who To Hangout</h1>
-    <p>You've been invited to an event! Redirecting to the app store...</p>
-    <div class="spinner"></div>
+    <p>You've been invited to an event!</p>
     <div class="store-links">
       <a class="btn" id="store-link" href="#">Download App</a>
     </div>
+    <p class="subtitle">If you already have the app, it should open automatically.</p>
   </div>
 
   <script>
@@ -63,13 +55,10 @@
         ? 'https://apps.apple.com/app/who-to-hangout/id6753943435'
         : 'https://play.google.com/store/apps/details?id=com.azentix.v2.wtho';
 
-      // Set button link
+      // Only set button link — no auto-redirect.
+      // If the app is installed, the Universal Link / App Link opens it directly.
+      // If not, the user taps the button manually.
       document.getElementById('store-link').href = storeUrl;
-
-      // Auto-redirect after short delay
-      setTimeout(function() {
-        window.location.href = storeUrl;
-      }, 1500);
     })();
   </script>
 </body>
