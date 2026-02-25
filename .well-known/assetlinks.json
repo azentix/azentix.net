@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.azentix.v2.wtho",
+      "sha256_cert_fingerprints": ["FB:DA:A5:06:3E:22:DF:C0:71:58:90:69:06:D2:CD:82:E1:CC:B3:6A:2F:04:3F:9C:8E:CC:7D:1D:6E:DC:9E:9F"]
+    }
+  }
+]

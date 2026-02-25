@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "MZ9A2HUU2B.com.azentix.v2.wtho",
+        "paths": ["/wtho/invite", "/wtho/invite?*", "/wtho/invite/*"]
+      }
+    ]
+  }
+}
