@@ -19,6 +19,8 @@
   <meta name="twitter:description" content="Find events nearby, meet new people, and discover the best venues in your city.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; width: 100%; }
@@ -499,35 +501,123 @@
   </div>
 
   <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyBKS4WklXuHbqYGkBnuSKzBql-gVe0VfJo",
+      projectId: "whotohangout-7df67",
+    });
+
     (function() {
       var ua = (navigator.userAgent || navigator.vendor || '').toLowerCase();
       var isIOS = /iphone|ipad|ipod/.test(ua) || (/macintosh/.test(ua) && 'ontouchend' in document);
       var isAndroid = /android/.test(ua);
       var isMobile = isIOS || isAndroid;
+      var platform = isIOS ? 'ios' : isAndroid ? 'android' : 'unknown';
 
       var iosStore = 'https://apps.apple.com/ua/app/who-to-hangout/id6753943435';
       var androidStore = 'https://play.google.com/store/apps/details?id=com.azentix.v2.wtho';
+      var storeUrl = isIOS ? iosStore : isAndroid ? androidStore : null;
+
+      var params = new URLSearchParams(window.location.search);
+      var source = params.get('utm_source') || params.get('source') || 'app-link';
+      var campaign = params.get('utm_campaign') || params.get('campaign') || '';
+      var content = params.get('utm_content') || params.get('content') || '';
+
+      var isBot = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|googlebot|yandex|baidu|semrush|ahrefs|mj12bot|dotbot|petalbot|bytespider|gptbot|applebot|twitterbot|linkedinbot|whatsapp|telegram|preview/.test(ua);
+
+      var done = false;
+
+      function logAndRedirect(geo, targetUrl) {
+        if (done) return;
+        done = true;
+        firebase.firestore().collection('banner_clicks').add({
+          platform: platform,
+          source: source,
+          campaign: campaign,
+          content: content,
+          referer: document.referrer || '',
+          userAgent: navigator.userAgent || '',
+          date: new Date().toISOString().split('T')[0],
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          geoCity: (geo && geo.city) || '',
+          geoCountry: (geo && geo.country) || '',
+          geoRegion: (geo && geo.region) || '',
+          geoIp: (geo && geo.ip) || '',
+          isBot: isBot,
+        }).then(function() {
+          if (targetUrl) window.location.href = targetUrl;
+        }).catch(function() {
+          if (targetUrl) window.location.href = targetUrl;
+        });
+      }
+
+      // JSONP callback for geojs.io
+      window.geoip = function(data) {
+        geoData = {
+          city: data.city || '',
+          country: data.country || '',
+          region: data.region || '',
+          ip: data.ip || '',
+        };
+        if (pendingRedirect) logAndRedirect(geoData, pendingRedirect);
+      };
+
+      var geoData = null;
+      var pendingRedirect = null;
+
+      // Load geo via JSONP
+      var s = document.createElement('script');
+      s.src = 'https://get.geojs.io/v1/ip/geo.js';
+      s.onerror = function() { geoData = {}; if (pendingRedirect) logAndRedirect(geoData, pendingRedirect); };
+      document.head.appendChild(s);
 
       var loadingEl = document.getElementById('loading-state');
       var storeEl = document.getElementById('store-section');
       var redirectTextEl = document.getElementById('redirect-text');
 
-      if (isMobile) {
-        // Show loading, auto-redirect
+      if (isMobile && storeUrl && !isBot) {
+        // Show loading, auto-redirect after tracking
         loadingEl.style.display = 'block';
         storeEl.style.display = 'none';
 
-        var storeUrl = isIOS ? iosStore : androidStore;
         var storeName = isIOS ? 'App Store' : 'Google Play';
         redirectTextEl.textContent = 'Taking you to ' + storeName + '...';
 
+        // Wait for geo, then log & redirect
         setTimeout(function() {
-          window.location.href = storeUrl;
-        }, 1500);
+          if (geoData) {
+            logAndRedirect(geoData, storeUrl);
+          } else {
+            pendingRedirect = storeUrl;
+          }
+        }, 800);
+
+        // Safety: redirect after 4s no matter what
+        setTimeout(function() { logAndRedirect(null, storeUrl); }, 4000);
       } else {
-        // Desktop — show both buttons
+        // Desktop or bot — show both buttons, log visit without redirect
         loadingEl.style.display = 'none';
         storeEl.style.display = 'block';
+
+        setTimeout(function() {
+          if (geoData) {
+            logAndRedirect(geoData, null);
+          } else {
+            pendingRedirect = null;
+            // wait for geo callback, then log
+            var origGeoip = window.geoip;
+            window.geoip = function(data) {
+              logAndRedirect({
+                city: data.city || '',
+                country: data.country || '',
+                region: data.region || '',
+                ip: data.ip || '',
+              }, null);
+            };
+          }
+        }, 500);
+
+        // Safety: log after 4s even without geo
+        setTimeout(function() { logAndRedirect(null, null); }, 4000);
       }
     })();
   </script>
