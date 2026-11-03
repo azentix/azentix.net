@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Guide — Azentix MacTune</title>
+  <meta name="description" content="How to use every section of Azentix MacTune: Smart Scan, Cache Cleaner, Uninstaller, Large Files, Running Apps, Limited Launcher, Startup Items and the menu bar.">
+  <meta name="theme-color" content="#0b0a1f">
+  <link rel="icon" href="/mactune/img/icon.png">
+  <link rel="stylesheet" href="/mactune/mactune.css">
+</head>
+<body>
+<div class="ambient"><i></i><i></i><i></i></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/mactune/"><img src="/mactune/img/icon.png" alt="">MacTune <small>by Azentix</small></a>
+    <nav>
+      <a href="/mactune/">Overview</a>
+      <a href="/mactune/guide/" aria-current="page">Guide</a>
+      <a href="/mactune/network/">Network</a>
+      <a href="/mactune/faq/">FAQ</a>
+      <a href="/mactune/privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+<aside>
+  <p>Guide</p>
+  <a href="#install">Install</a>
+  <a href="#full-disk-access">Full Disk Access</a>
+  <a href="#smart-scan">Smart Scan</a>
+  <a href="#cache-cleaner">Cache Cleaner</a>
+  <a href="#uninstaller">Uninstaller</a>
+  <a href="#large-files">Large &amp; Old Files</a>
+  <a href="#running-apps">Running Apps</a>
+  <a href="#limited-launcher">Limited Launcher</a>
+  <a href="#startup-items">Startup Items</a>
+  <a href="#menu-bar">Menu bar</a>
+  <a href="/mactune/network/">Network →</a>
+</aside>
+<article>
+  <h1>MacTune guide</h1>
+  <p class="intro">Everything each section does, what it touches, and how to undo it.</p>
+
+  <h2 id="install">Install</h2>
+  <ol>
+    <li>Move <strong>Azentix MacTune.app</strong> to <code>/Applications</code>. The network filter only loads from there.</li>
+    <li>Open it. macOS 15 Sequoia or later is required.</li>
+    <li>For internet switches and limits, open <strong>Network → Install</strong> and allow the extension in <strong>System Settings → General → Login Items &amp; Extensions → Network Extensions</strong>. See <a href="/mactune/network/#setup">Network setup</a>.</li>
+    <li>Allow notifications when asked, so you hear when an app reaches its limit.</li>
+  </ol>
+  <h3>Build from source</h3>
+  <p>MacTune is plain SwiftPM with no dependencies:</p>
+  <pre><code>./scripts/bundle.sh
+open "build/Azentix MacTune.app"</code></pre>
+  <p>The signed build with the network filter needs an Apple developer team and <a href="https://github.com/yonaskolb/XcodeGen">XcodeGen</a>: set your team in <code>project.yml</code>, then run <code>./scripts/build-signed.sh</code>.</p>
+
+  <h2 id="full-disk-access">Full Disk Access</h2>
+  <p>macOS protects some folders, such as other apps' containers. MacTune works without access, it just finds less. To scan everything, add the app in <strong>System Settings → Privacy &amp; Security → Full Disk Access</strong>. The Cache Cleaner shows a banner with a shortcut when it hits a protected folder.</p>
+
+  <h2 id="smart-scan">Smart Scan</h2>
+  <figure><div class="window"><img src="/mactune/img/dashboard.jpg" alt="Smart Scan" loading="lazy"></div></figure>
+  <p>The start screen. Rings show disk, memory (the same "Memory Used" as Activity Monitor) and CPU load. Press <strong>Scan</strong> to measure junk in every cleaner category, then <strong>Clean Now</strong>, or <strong>Review</strong> to pick items first. Below are the apps using the most memory and shortcuts into the other sections.</p>
+
+  <h2 id="cache-cleaner">Cache Cleaner</h2>
+  <figure><div class="window"><img src="/mactune/img/cleaner.jpg" alt="Cache Cleaner" loading="lazy"></div></figure>
+  <div class="table-wrap"><table>
+    <tr><th>Category</th><th>What it contains</th></tr>
+    <tr><td>User Caches</td><td><code>~/Library/Caches</code>. Apple's <code>com.apple.*</code> caches are skipped.</td></tr>
+    <tr><td>Sandboxed App Caches</td><td><code>~/Library/Containers/*/Data/Library/Caches</code></td></tr>
+    <tr><td>User Logs</td><td><code>~/Library/Logs</code></td></tr>
+    <tr><td>Xcode Junk</td><td>DerivedData, old iOS DeviceSupport, simulator caches</td></tr>
+    <tr><td>Developer Package Caches</td><td>npm, pip, Gradle and Cargo registry caches</td></tr>
+    <tr><td>Trash</td><td>Items in <code>~/.Trash</code>. Never pre-selected.</td></tr>
+  </table></div>
+  <p>Expand a category to tick individual folders. A scan is reused for an hour, so switching sections doesn't rescan your disk; press <strong>Rescan</strong> any time for fresh numbers.</p>
+  <div class="callout warn"><p><strong>Cache cleaning deletes permanently</strong>, after a confirmation. Caches are rebuilt by their apps, so the first launch afterwards can be a little slower.</p></div>
+
+  <h2 id="uninstaller">Uninstaller</h2>
+  <figure><div class="window"><img src="/mactune/img/uninstaller.jpg" alt="Uninstaller" loading="lazy"></div></figure>
+  <p>Lists apps in <code>/Applications</code> and <code>~/Applications</code>. Pick one, or drop an <code>.app</code> on the window, to see its related files: Application Support, Caches, Preferences, Containers, Group Containers, Saved State, Logs and Launch Agents/Daemons.</p>
+  <ul>
+    <li>Files matched by bundle ID are ticked. Weaker name-only matches are flagged and left unticked.</li>
+    <li>The magnifier shows a file in Finder.</li>
+    <li><strong>Uninstall</strong> moves the app and the ticked files to the Trash. If the app is running, it's asked to quit first.</li>
+    <li>Apple apps are protected. Apps owned by root use the standard administrator prompt.</li>
+  </ul>
+
+  <h2 id="large-files">Large &amp; Old Files</h2>
+  <figure><div class="window"><img src="/mactune/img/largeFiles.jpg" alt="Large and Old Files" loading="lazy"></div></figure>
+  <p>Scans Downloads, Documents, Desktop, Movies, Music and Pictures. Filter by size (over 10 MB to over 1 GB) and age (over a month to over a year), or by name. Tick files and choose <strong>Move to Trash</strong>.</p>
+
+  <h2 id="running-apps">Running Apps</h2>
+  <figure><div class="window"><img src="/mactune/img/running.jpg" alt="Running Apps" loading="lazy"></div></figure>
+  <p><strong>Apps</strong> shows your apps with memory use; <strong>All Processes</strong> adds background processes, CPU and owner. Select one or many and choose <strong>Quit</strong> or <strong>Force Quit</strong>. MacTune refuses to stop PID 1, other users' processes and critical macOS processes such as Finder, Dock and WindowServer.</p>
+
+  <h2 id="limited-launcher">Limited Launcher</h2>
+  <figure class="narrow"><div class="window"><img src="/mactune/img/launcher-sheet.jpg" alt="Limited Launcher apps" loading="lazy"></div></figure>
+  <p>A focus mode: while it's on, only the apps you allow can run. Turning it on lists the other open apps and asks them to quit after you confirm; apps opened later are closed right away. Finder, Dock, System Settings, menu bar helpers and background services are never touched. Toggle it in Running Apps or the menu bar.</p>
+  <div class="callout"><p>Limited Launcher is about <em>which apps run</em>. To keep an app running but offline, use the <a href="/mactune/network/">Network</a> switches instead — they never close anything.</p></div>
+
+  <h2 id="startup-items">Startup Items</h2>
+  <figure><div class="window"><img src="/mactune/img/startup.jpg" alt="Startup Items" loading="lazy"></div></figure>
+  <p>Launch agents and daemons from <code>~/Library/LaunchAgents</code>, <code>/Library/LaunchAgents</code> and <code>/Library/LaunchDaemons</code>. Disabling is persistent (<code>launchctl disable</code>) and reversible; <strong>Remove</strong> moves the plist to the Trash. System-wide items ask for the administrator password.</p>
+  <p>Login items added through System Settings (<code>SMAppService</code>) can't be listed without root yet; manage them in <strong>System Settings → General → Login Items</strong>.</p>
+
+  <h2 id="menu-bar">Menu bar</h2>
+  <figure class="narrow"><div class="window"><img src="/mactune/img/menubar.jpg" alt="Menu bar panel" loading="lazy"></div></figure>
+  <p>Choose what the menu bar shows: CPU, memory, network speed, free disk and Hotspot Guard state. The panel has live rings, Hotspot Guard and Limited Launcher switches, current network speed, quick scan and clean, top memory apps with a quick quit button, Empty Trash, and shortcuts into the app.</p>
+
+  <div class="next"><a class="btn primary" href="/mactune/network/">Next: Network &amp; Hotspot Guard →</a><a class="btn" href="/mactune/faq/">FAQ</a></div>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Azentix · MacTune is MIT-licensed</span>
+    <span><a href="/">azentix.net</a><a href="/mactune/guide/">Guide</a><a href="/mactune/privacy/">Privacy</a><a href="mailto:contact@azentix.net">contact@azentix.net</a></span>
+  </div>
+</footer>
+</body>
+</html>

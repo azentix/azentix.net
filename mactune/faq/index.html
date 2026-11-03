@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FAQ — Azentix MacTune</title>
+  <meta name="description" content="Answers about Azentix MacTune: safety, cleaning, network filter, limits and support.">
+  <meta name="theme-color" content="#0b0a1f">
+  <link rel="icon" href="/mactune/img/icon.png">
+  <link rel="stylesheet" href="/mactune/mactune.css">
+</head>
+<body>
+<div class="ambient"><i></i><i></i><i></i></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/mactune/"><img src="/mactune/img/icon.png" alt="">MacTune <small>by Azentix</small></a>
+    <nav>
+      <a href="/mactune/">Overview</a>
+      <a href="/mactune/guide/">Guide</a>
+      <a href="/mactune/network/">Network</a>
+      <a href="/mactune/faq/" aria-current="page">FAQ</a>
+      <a href="/mactune/privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+<aside>
+  <p>FAQ</p>
+  <a href="#general">General</a>
+  <a href="#cleaning">Cleaning</a>
+  <a href="#network">Network</a>
+  <a href="#support">Support</a>
+</aside>
+<article>
+  <h1>Frequently asked questions</h1>
+  <p class="intro">Short answers. The <a href="/mactune/guide/">guide</a> has the details.</p>
+
+  <h2 id="general">General</h2>
+  <details><summary>Is MacTune free?</summary><p>Yes. It's open source under the MIT license, with no ads, subscriptions or in-app purchases.</p></details>
+  <details><summary>Which Macs are supported?</summary><p>macOS 15 Sequoia or later on Apple silicon.</p></details>
+  <details><summary>Where do I get it?</summary><p>MacTune is in beta. Write to <a href="mailto:contact@azentix.net?subject=MacTune%20beta">contact@azentix.net</a> and we'll send a notarized build. You can also build it from source, see <a href="/mactune/guide/#install">Install</a>.</p></details>
+  <details><summary>Does it run in the background?</summary><p>Only while it's open or in the menu bar. Nothing is cleaned or removed automatically. The network filter is a separate system extension that applies your rules even while the window is closed.</p></details>
+  <details><summary>Does it slow my Mac down?</summary><p>No. When idle it uses a few percent of one CPU core, and hidden sections stop updating. Animations follow Reduce Motion.</p></details>
+
+  <h2 id="cleaning">Cleaning</h2>
+  <details><summary>Is it safe to delete caches?</summary><p>Yes, apps rebuild their caches when they need them. Apple's own caches are skipped, and you review every item before anything is deleted.</p></details>
+  <details><summary>Can I undo an uninstall?</summary><p>Yes. The app and its files go to the Trash; drag them back to restore. Only cache cleaning and emptying the Trash are permanent.</p></details>
+  <details><summary>Why does it find less than I expected?</summary><p>Some folders need Full Disk Access. Add MacTune in System Settings → Privacy &amp; Security → Full Disk Access.</p></details>
+  <details><summary>Why didn't the cleaner rescan?</summary><p>A scan is kept for an hour so the cleaner opens instantly. Press Rescan for fresh numbers.</p></details>
+
+  <h2 id="network">Network</h2>
+  <details><summary>Does blocking an app close it?</summary><p>Never. The network filter stops its traffic; the app keeps running and reconnects when you allow it again.</p></details>
+  <details><summary>Does MacTune read my traffic?</summary><p>No. The filter only looks at which app opened a connection to decide allow or drop. Content isn't inspected, logged or sent anywhere.</p></details>
+  <details><summary>I set a limit and it said "limit reached" right away</summary><p>The app had already used more than that today. Choose "Start counting from now", or add +10 MB / +100 MB / +1 GB for today.</p></details>
+  <details><summary>Will it block system updates or iCloud?</summary><p>No. System services and command line tools always keep their network.</p></details>
+  <details><summary>Does it work with a VPN?</summary><p>Usually yes. If you also run another firewall, such as LuLu, a connection blocked by either one stays blocked.</p></details>
+
+  <h2 id="support">Support</h2>
+  <p>Found a bug or have an idea? Write to <a href="mailto:contact@azentix.net?subject=MacTune">contact@azentix.net</a>. Including your macOS version and what you clicked helps a lot.</p>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Azentix · MacTune is MIT-licensed</span>
+    <span><a href="/">azentix.net</a><a href="/mactune/guide/">Guide</a><a href="/mactune/privacy/">Privacy</a><a href="mailto:contact@azentix.net">contact@azentix.net</a></span>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Privacy — Azentix MacTune</title>
+  <meta name="description" content="Azentix MacTune collects no data. No analytics, no account, no server.">
+  <meta name="theme-color" content="#0b0a1f">
+  <link rel="icon" href="/mactune/img/icon.png">
+  <link rel="stylesheet" href="/mactune/mactune.css">
+</head>
+<body>
+<div class="ambient"><i></i><i></i><i></i></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/mactune/"><img src="/mactune/img/icon.png" alt="">MacTune <small>by Azentix</small></a>
+    <nav>
+      <a href="/mactune/">Overview</a>
+      <a href="/mactune/guide/">Guide</a>
+      <a href="/mactune/network/">Network</a>
+      <a href="/mactune/faq/">FAQ</a>
+      <a href="/mactune/privacy/" aria-current="page">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+<aside>
+  <p>Privacy</p>
+  <a href="#summary">Summary</a>
+  <a href="#on-device">What stays on your Mac</a>
+  <a href="#network-filter">The network filter</a>
+  <a href="#permissions">Permissions</a>
+  <a href="#contact">Contact</a>
+</aside>
+<article>
+  <h1>Privacy</h1>
+  <p class="intro">Last updated November 3, 2026.</p>
+
+  <h2 id="summary">Summary</h2>
+  <p><strong>Azentix MacTune collects no data.</strong> It has no analytics, no crash reporting service, no account and no server. Nothing you do in the app leaves your Mac.</p>
+
+  <h2 id="on-device">What stays on your Mac</h2>
+  <p>MacTune keeps a few small files in <code>~/Library/Application Support/AzentixMacTune</code>:</p>
+  <ul>
+    <li>per-app traffic totals for the last 14 days, and your limits and internet switches;</li>
+    <li>Hotspot Guard and Limited Launcher settings;</li>
+    <li>the last cache scan, so it doesn't rescan for an hour.</li>
+  </ul>
+  <p>Delete that folder to remove them; it contains nothing else.</p>
+
+  <h2 id="network-filter">The network filter</h2>
+  <p>The optional filter decides for each connection whether the app that opened it may use the internet. It sees the app's identity and the connection, never stores them, and doesn't inspect, record or forward what is sent. It runs only on your Mac.</p>
+
+  <h2 id="permissions">Permissions</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Permission</th><th>Why</th></tr>
+    <tr><td>Full Disk Access (optional)</td><td>To measure and clean caches in protected folders.</td></tr>
+    <tr><td>Network Extension (optional)</td><td>To switch apps' internet off, enforce limits and Hotspot Guard.</td></tr>
+    <tr><td>Notifications</td><td>To tell you when an app nears or reaches its limit.</td></tr>
+    <tr><td>Administrator password (when asked)</td><td>Only to remove system-wide startup items or apps owned by root.</td></tr>
+  </table></div>
+  <p>The only link that leaves the app is the azentix.net link in the sidebar, which opens in your browser.</p>
+
+  <h2 id="contact">Contact</h2>
+  <p>Questions: <a href="mailto:contact@azentix.net">contact@azentix.net</a>.</p>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Azentix · MacTune is MIT-licensed</span>
+    <span><a href="/">azentix.net</a><a href="/mactune/guide/">Guide</a><a href="/mactune/privacy/">Privacy</a><a href="mailto:contact@azentix.net">contact@azentix.net</a></span>
+  </div>
+</footer>
+</body>
+</html>
