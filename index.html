@@ -275,6 +275,16 @@
       margin-bottom: 40px;
     }
 
+    .product-list {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 420px));
+      justify-content: center;
+    }
+    .product-list .product-card { margin: 0; max-width: none; }
+    .product-icon.app-icon { background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .product-icon.app-icon img { width: 84px; height: 84px; filter: drop-shadow(0 8px 18px rgba(124,108,255,0.5)); }
+
     .product-card {
       background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 100%);
       backdrop-filter: blur(40px) saturate(1.6);
@@ -485,6 +495,7 @@
       <div class="section-inner">
         <p class="section-label">Products</p>
         <h2>What we've built</h2>
+        <div class="product-list">
         <a class="product-card" href="/whotohangout">
           <div class="card-glow"></div>
           <div class="product-icon">
@@ -504,6 +515,20 @@
             </svg>
           </span>
         </a>
+        <a class="product-card" href="/mactune/">
+          <div class="card-glow"></div>
+          <div class="product-icon app-icon"><img src="/mactune/img/icon.png" alt=""></div>
+          <h3>Azentix MacTune</h3>
+          <p class="product-desc">Clean, tune and guard your Mac: junk cleaner, uninstaller, and per-app internet limits with Hotspot Guard.</p>
+          <span class="product-link-text">
+            Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </span>
+        </a>
+      </div>
       </div>
     </section>
 
