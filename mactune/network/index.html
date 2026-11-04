@@ -80,6 +80,16 @@
   </ul>
   <p>You can also flip the guard from the menu bar panel.</p>
 
+  <h2 id="ask-new-apps">Ask for new apps</h2>
+  <figure class="narrow"><div class="window"><img src="/mactune/img/connection-alert.png" alt="Alert: Slack wants to connect to the internet, with Deny and Allow" loading="lazy"></div></figure>
+  <p>Connection alerts, like LuLu. Turn on <strong>Ask for new apps</strong> in Network and the first time an app connects to the internet, the connection waits while a small alert shows the app and where it's connecting.</p>
+  <ul>
+    <li><strong>Allow</strong> lets the app through from now on. <strong>Deny</strong> turns its internet off, the same as the Internet switch.</li>
+    <li><strong>Rules…</strong> lists every answer. Switch one between Allow and Deny, or forget it to be asked again.</li>
+    <li>Apps you already used before turning it on count as known and aren't asked about. Apple's own apps and system services never are.</li>
+    <li>If nobody answers within a minute, or MacTune isn't running, the connection goes through, so nothing hangs.</li>
+  </ul>
+
   <h2 id="rules">How rules combine</h2>
   <p>An app is offline when <em>any</em> of these is true; the cell shows the reason:</p>
   <div class="table-wrap"><table>
@@ -87,6 +97,7 @@
     <tr><td>You turned its internet off</td><td>Internet off</td><td>You turn it back on</td></tr>
     <tr><td>Its daily limit is used up</td><td>Limit reached</td><td>Midnight, a top-up, or a bigger limit</td></tr>
     <tr><td>Hotspot Guard is on and it isn't allowed</td><td>Hotspot Guard</td><td>You allow it, or the guard turns off</td></tr>
+    <tr><td>You chose Deny in a connection alert</td><td>Internet off</td><td>You allow it in Rules or turn it back on</td></tr>
   </table></div>
   <p>System services (DNS, software update, iCloud daemons), command line tools, Finder, Dock and MacTune itself are never blocked.</p>
 
@@ -106,7 +117,7 @@
 <footer>
   <div class="wrap">
     <span>&copy; 2026 Azentix · MacTune is MIT-licensed</span>
-    <span><a href="/">azentix.net</a><a href="/mactune/guide/">Guide</a><a href="/mactune/privacy/">Privacy</a><a href="mailto:contact@azentix.net">contact@azentix.net</a></span>
+    <span><a href="/">azentix.net</a><a href="/mactune/guide/">Guide</a><a href="/mactune/privacy/">Privacy</a><a href="mailto:support@azentix.net">support@azentix.net</a></span>
   </div>
 </footer>
 </body>
