@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Privacy — Azentix Pulse</title>
+  <meta name="description" content="Azentix Pulse collects no data. Your activity stays on your Mac: no account, no analytics, no server.">
+  <meta name="theme-color" content="#0b0a1f">
+  <link rel="icon" href="/pulse/img/icon.png">
+  <link rel="stylesheet" href="/pulse/pulse.css">
+</head>
+<body>
+<div class="ambient"><i></i><i></i><i></i></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/pulse/"><img src="/pulse/img/icon.png" alt="">Pulse <small>by Azentix</small></a>
+    <nav>
+      <a href="/pulse/">Overview</a>
+      <a href="/pulse/faq/">FAQ</a>
+      <a href="/pulse/privacy/" aria-current="page">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+<aside>
+  <p>Privacy</p>
+  <a href="#summary">Summary</a>
+  <a href="#recorded">What Pulse records</a>
+  <a href="#not-recorded">What it never records</a>
+  <a href="#storage">Where it's stored</a>
+  <a href="#purchases">Purchases</a>
+  <a href="#permissions">Permissions</a>
+  <a href="#contact">Contact</a>
+</aside>
+<article>
+  <h1>Privacy</h1>
+  <p class="intro">Last updated November 4, 2026.</p>
+
+  <h2 id="summary">Summary</h2>
+  <p><strong>Azentix Pulse collects no data.</strong> It has no account, no analytics, no crash reporting service and no server. What it records about your app usage stays on your Mac and is never sent to us or anyone else.</p>
+
+  <h2 id="recorded">What Pulse records</h2>
+  <p>While it runs, Pulse notes which app is in front and for how long. For each stretch of time it keeps:</p>
+  <ul>
+    <li>the app's name and bundle identifier (for example <code>com.apple.Safari</code>);</li>
+    <li>when the stretch started and ended.</li>
+  </ul>
+  <p>It stops counting when you're idle, the screen is locked, the Mac sleeps, or you pause tracking. Apps you add to <em>Settings › Privacy › Don't track these apps</em> are never recorded.</p>
+  <p>Your settings (theme, daily goal, menu bar options, language, excluded apps) are kept in the app's preferences.</p>
+
+  <h2 id="not-recorded">What it never records</h2>
+  <p>Pulse doesn't read window titles, document or file names, web addresses, keystrokes, mouse movements, screen contents or network traffic. It doesn't know what you do inside an app, only that the app was in front.</p>
+
+  <h2 id="storage">Where it's stored</h2>
+  <p>Everything lives in the app's sandbox container on your Mac (<code>~/Library/Containers/com.azentix.pulse</code>). Nothing is synced to iCloud or uploaded anywhere. To erase your history, use <em>Settings › Privacy › Delete All Activity</em>. Moving the app to the Trash leaves that folder behind, so delete it too if you want no trace.</p>
+
+  <h2 id="purchases">Purchases</h2>
+  <p>The free trial and Pulse Forever are handled by Apple through the App Store. We don't receive your name, Apple ID, email or payment details. Apple's privacy policy covers those transactions.</p>
+
+  <h2 id="permissions">Permissions</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Permission</th><th>Why</th></tr>
+    <tr><td>None required</td><td>Pulse uses the public list of running apps and the time since your last input that macOS provides to every app. It doesn't ask for Accessibility, Screen Recording or Full Disk Access.</td></tr>
+    <tr><td>Login item (optional)</td><td>Only if you turn on <em>Open Pulse at login</em>.</td></tr>
+  </table></div>
+
+  <h2 id="contact">Contact</h2>
+  <p>Questions: <a href="mailto:support@azentix.net">support@azentix.net</a>.</p>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Azentix</span>
+    <span><a href="/">azentix.net</a><a href="/pulse/faq/">FAQ</a><a href="/pulse/privacy/">Privacy</a><a href="mailto:support@azentix.net">support@azentix.net</a></span>
+  </div>
+</footer>
+</body>
+</html>
