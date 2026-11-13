@@ -4,65 +4,83 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Azentix — We build apps that connect people</title>
-  <meta name="description" content="Azentix is a small Ukrainian tech studio building mobile apps that bring people together.">
+  <meta name="description" content="Azentix is a small Ukrainian tech studio building social apps, games and Mac utilities.">
   <meta name="theme-color" content="#0A1628">
+  <meta property="og:title" content="Azentix — We build apps that connect people">
+  <meta property="og:description" content="A small Ukrainian studio building social apps, games and Mac utilities.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://azentix.net/">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <style>
+    :root {
+      --bg: #0A1628;
+      --teal: #00AFB9;
+      --teal-deep: #0081A7;
+      --gold: #FFC75F;
+      --violet: #9B8CFF;
+      --text: #fff;
+      --text-2: rgba(255,255,255,0.56);
+      --text-3: rgba(255,255,255,0.4);
+      --line: rgba(255,255,255,0.12);
+      --card: linear-gradient(160deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.025) 100%);
+      --r-lg: 24px;
+      --r-md: 16px;
+      --r-sm: 10px;
+      --accent: var(--teal);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
     html, body { width: 100%; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
       min-height: -webkit-fill-available;
-      background: #0A1628;
-      color: #fff;
+      background: var(--bg);
+      color: var(--text);
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Aurora background */
-    .aurora {
+    a { color: inherit; }
+
+    /* ---------- Background: aurora + stars ---------- */
+    .aurora, .stars {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       z-index: 0;
-      overflow: hidden;
       pointer-events: none;
+      overflow: hidden;
     }
     .aurora-layer {
       position: absolute;
       width: 150%;
       height: 60%;
       filter: blur(80px);
-      opacity: 0.6;
+      opacity: 0.55;
     }
     .aurora-1 {
-      top: -20%;
-      left: -25%;
-      background: radial-gradient(ellipse at 30% 50%, #0081A7 0%, transparent 60%);
+      top: -20%; left: -25%;
+      background: radial-gradient(ellipse at 30% 50%, var(--teal-deep) 0%, transparent 60%);
       animation: aurora1 12s ease-in-out infinite;
     }
     .aurora-2 {
-      top: 10%;
-      right: -30%;
-      background: radial-gradient(ellipse at 60% 40%, #00AFB9 0%, transparent 55%);
+      top: 10%; right: -30%;
+      background: radial-gradient(ellipse at 60% 40%, var(--teal) 0%, transparent 55%);
       animation: aurora2 15s ease-in-out infinite 2s;
     }
     .aurora-3 {
-      bottom: -10%;
-      left: -10%;
+      bottom: -10%; left: -10%;
       background: radial-gradient(ellipse at 40% 60%, #006B8A 0%, transparent 50%);
       animation: aurora3 18s ease-in-out infinite 4s;
     }
     .aurora-4 {
-      top: 30%;
-      left: 10%;
-      width: 80%;
-      height: 40%;
+      top: 30%; left: 10%;
+      width: 80%; height: 40%;
       background: radial-gradient(ellipse at 50% 50%, rgba(253,252,220,0.08) 0%, transparent 60%);
       animation: aurora4 10s ease-in-out infinite 1s;
     }
-
     @keyframes aurora1 {
       0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
       33% { transform: translate(5%, 8%) rotate(2deg) scale(1.1); }
@@ -82,18 +100,7 @@
       50% { opacity: 0.7; transform: scale(1.15); }
     }
 
-    /* Stars */
-    .stars {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .star {
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-    }
+    .star { position: absolute; background: #fff; border-radius: 50%; }
     .s1 { width: 2px; height: 2px; top: 12%; left: 18%; animation: twinkle 3s ease-in-out infinite; }
     .s2 { width: 1.5px; height: 1.5px; top: 8%; left: 72%; animation: twinkle 4s ease-in-out infinite 0.5s; }
     .s3 { width: 2.5px; height: 2.5px; top: 22%; left: 85%; animation: twinkle 3.5s ease-in-out infinite 1s; }
@@ -104,331 +111,524 @@
     .s8 { width: 2px; height: 2px; top: 45%; left: 55%; animation: twinkle 4s ease-in-out infinite 1.2s; }
     .s9 { width: 1.5px; height: 1.5px; top: 52%; left: 15%; animation: twinkle 3.2s ease-in-out infinite 3s; }
     .s10 { width: 1px; height: 1px; top: 18%; left: 42%; animation: twinkle 5s ease-in-out infinite 0.3s; }
-
     @keyframes twinkle {
       0%, 100% { opacity: 0.15; transform: scale(1); }
       50% { opacity: 0.6; transform: scale(1.4); }
     }
 
-    /* Layout */
-    .content {
-      position: relative;
-      z-index: 1;
-    }
+    /* ---------- Shell ---------- */
+    .content { position: relative; z-index: 1; }
+    .wrap { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 24px; }
 
-    section {
-      min-height: 100vh;
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      background: rgba(10,22,40,0.72);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .topbar-inner {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+    .brand-mark {
+      width: 28px; height: 28px;
+      border-radius: 9px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.22), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.2);
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      font-weight: 800;
+    }
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .topnav a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      transition: color 0.25s, background 0.25s;
+      white-space: nowrap;
+    }
+    .topnav a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      min-height: 100svh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 80px 24px;
-    }
-
-    .section-inner {
-      max-width: 720px;
-      width: 100%;
-    }
-
-    /* Hero */
-    .hero {
       text-align: center;
-      flex-direction: column;
+      padding: 120px 24px 80px;
     }
-
     .hero-logo {
-      width: 96px;
-      height: 96px;
+      width: 96px; height: 96px;
       margin: 0 auto 32px;
       position: relative;
-      animation: appear 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+      animation: appear 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
     }
     .hero-logo::after {
       content: '';
       position: absolute;
       inset: -14px;
       border-radius: 34px;
-      background: conic-gradient(
-        from 220deg,
-        rgba(0,175,185,0.4),
-        rgba(0,129,167,0.1),
-        rgba(253,252,220,0.3),
-        rgba(77,195,204,0.1),
-        rgba(0,175,185,0.4)
-      );
+      background: conic-gradient(from 220deg,
+        rgba(0,175,185,0.4), rgba(0,129,167,0.1),
+        rgba(253,252,220,0.3), rgba(77,195,204,0.1), rgba(0,175,185,0.4));
       filter: blur(14px);
       animation: glowSpin 8s linear infinite;
       opacity: 0.7;
     }
     @keyframes glowSpin { to { transform: rotate(360deg); } }
-
     .hero-logo-glass {
       position: relative;
       z-index: 1;
-      width: 96px;
-      height: 96px;
+      width: 96px; height: 96px;
       border-radius: 28px;
       background: linear-gradient(145deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 100%);
       backdrop-filter: blur(20px) saturate(1.4);
       -webkit-backdrop-filter: blur(20px) saturate(1.4);
       border: 1px solid rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow:
-        0 8px 32px rgba(0,0,0,0.2),
-        inset 0 1px 0 rgba(255,255,255,0.25);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.25);
     }
-
     .hero-logo-text {
       font-size: 48px;
       font-weight: 800;
-      color: #fff;
       line-height: 1;
       letter-spacing: -1px;
       text-shadow: 0 2px 8px rgba(0,175,185,0.3);
     }
-
     .hero h1 {
-      font-size: 48px;
+      font-size: clamp(38px, 8vw, 56px);
       font-weight: 800;
-      letter-spacing: -0.5px;
-      line-height: 1.1;
-      animation: appear 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+      letter-spacing: -1px;
+      line-height: 1.05;
+      animation: appear 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
     }
     .hero h1 .accent {
-      background: linear-gradient(135deg, #00AFB9, #4DC3CC);
+      background: linear-gradient(135deg, var(--teal), #4DC3CC);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .hero .tagline {
-      font-size: 20px;
-      color: rgba(255,255,255,0.5);
+      font-size: clamp(16px, 4vw, 20px);
+      color: var(--text-2);
       margin-top: 16px;
-      font-weight: 400;
-      letter-spacing: 0.3px;
-      animation: appear 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
+      letter-spacing: 0.2px;
+      animation: appear 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
     }
 
-    .scroll-hint {
-      margin-top: 48px;
-      animation: appear 0.9s ease-out 1.2s both;
+    .hero-chips {
+      margin-top: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      animation: appear 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
     }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 18px 10px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      transition: transform 0.25s, background 0.25s, border-color 0.25s;
+    }
+    .chip:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.22);
+    }
+    .chip .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+    .chip .count {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3);
+    }
+
+    .scroll-hint { margin-top: 44px; animation: appear 0.9s ease-out 1s both; }
     .scroll-hint a {
       color: rgba(255,255,255,0.25);
       text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 1px;
+      font-size: 12px;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
-      display: flex;
+      display: inline-flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
       transition: color 0.3s;
     }
     .scroll-hint a:hover { color: rgba(255,255,255,0.5); }
-    .scroll-arrow {
-      width: 24px;
-      height: 24px;
-      animation: bounceDown 2s ease-in-out infinite;
-    }
+    .scroll-arrow { width: 22px; height: 22px; animation: bounceDown 2s ease-in-out infinite; }
     @keyframes bounceDown {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(6px); }
     }
 
-    /* About Section */
-    .about { min-height: auto; padding: 80px 24px; }
-    .about .section-inner { text-align: center; }
-
+    /* ---------- Section furniture ---------- */
+    .section { padding: 72px 0; }
     .section-label {
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #00AFB9;
-      margin-bottom: 16px;
+      color: var(--accent);
+      margin-bottom: 14px;
     }
-
-    .about h2 {
-      font-size: 32px;
+    .section h2 {
+      font-size: clamp(24px, 5vw, 32px);
       font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 20px;
+      line-height: 1.25;
+      letter-spacing: -0.4px;
     }
 
-    .about p {
+    /* About */
+    .about { text-align: center; }
+    .about p.lead {
       font-size: 17px;
-      color: rgba(255,255,255,0.55);
+      color: var(--text-2);
       line-height: 1.7;
-      max-width: 520px;
-      margin: 0 auto;
+      max-width: 560px;
+      margin: 18px auto 0;
     }
-
-    /* Products Section */
-    .products { min-height: auto; padding: 80px 24px; }
-    .products .section-inner { text-align: center; }
-
-    .products h2 {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 40px;
-    }
-
-    .product-list {
+    .facts {
+      margin-top: 40px;
       display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 420px));
-      justify-content: center;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     }
-    .product-list .product-card { margin: 0; max-width: none; }
-    .product-icon.app-icon { background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
-    .product-icon.app-icon img { width: 84px; height: 84px; filter: drop-shadow(0 8px 18px rgba(124,108,255,0.5)); }
-
-    .product-card {
-      background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 100%);
-      backdrop-filter: blur(40px) saturate(1.6);
-      -webkit-backdrop-filter: blur(40px) saturate(1.6);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 28px;
-      padding: 40px 32px;
-      max-width: 420px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      color: #fff;
+    .fact {
+      padding: 20px 18px;
+      border-radius: var(--r-md);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .fact b {
       display: block;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow:
-        0 24px 48px rgba(0,0,0,0.15),
-        0 4px 12px rgba(0,0,0,0.08),
-        inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow:
-        0 32px 64px rgba(0,0,0,0.2),
-        0 8px 24px rgba(0,0,0,0.1),
-        inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-    /* Light sweep */
-    .product-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -120%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.07) 45%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.07) 55%, transparent 65%);
-      animation: sweep 5s ease-in-out infinite 2s;
-      pointer-events: none;
-    }
-    @keyframes sweep {
-      0% { left: -120%; }
-      40%, 100% { left: 220%; }
-    }
-    /* Card glow border */
-    .product-card .card-glow {
-      position: absolute;
-      top: -1px; left: -1px; right: -1px; bottom: -1px;
-      border-radius: 28px;
-      border: 1px solid transparent;
-      background: linear-gradient(160deg, rgba(0,175,185,0.15) 0%, transparent 40%, transparent 60%, rgba(0,129,167,0.1) 100%) border-box;
-      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    .product-icon {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 20px;
-      border-radius: 20px;
-      background: linear-gradient(145deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 100%);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow:
-        0 4px 16px rgba(0,0,0,0.15),
-        inset 0 1px 0 rgba(255,255,255,0.25);
-    }
-    .product-icon svg {
-      width: 44px;
-      height: 48px;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
-    }
-
-    .product-card h3 {
       font-size: 22px;
       font-weight: 700;
-      margin-bottom: 8px;
+      letter-spacing: -0.3px;
     }
-    .product-card .product-desc {
-      font-size: 15px;
-      color: rgba(255,255,255,0.45);
+    .fact span {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    .section-products { padding-top: 24px; padding-bottom: 24px; }
+
+    /* ---------- Categories ---------- */
+    .cat { padding-top: 24px; padding-bottom: 24px; }
+    .cat-social { --accent: var(--teal); }
+    .cat-games  { --accent: var(--gold); }
+    .cat-mac    { --accent: var(--violet); }
+
+    .cat-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .cat-head h2 {
+      font-size: clamp(22px, 4.6vw, 28px);
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cat-head h2::before {
+      content: '';
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px var(--accent);
+      flex: none;
+    }
+    .cat-head p {
+      font-size: 14.5px;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+
+    .cards {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    /* ---------- Card ---------- */
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 26px 26px 22px;
+      border-radius: var(--r-lg);
+      background: var(--card);
+      backdrop-filter: blur(40px) saturate(1.5);
+      -webkit-backdrop-filter: blur(40px) saturate(1.5);
+      border: 1px solid rgba(255,255,255,0.13);
+      text-decoration: none;
+      color: var(--text);
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120% 100% at 10% 0%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--accent) 45%, rgba(255,255,255,0.13));
+      box-shadow: 0 30px 60px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+    }
+
+    /* Icon system: one optical size for every product */
+    .icon {
+      width: 68px; height: 68px;
+      flex: none;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .icon img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Full-bleed square artwork (mobile/game icons) → squircle mask + ring */
+    .icon--bleed {
+      border-radius: 22%;
+      overflow: hidden;
+      box-shadow:
+        0 10px 22px rgba(0,0,0,0.38),
+        inset 0 0 0 1px rgba(255,255,255,0.14);
+    }
+    /* Artwork that sits deep inside its own canvas — crop the dead margin */
+    .icon--zoom img { transform: scale(1.08); }
+
+    /* Icons that already ship transparent padding + their own shadow */
+    .icon--free { overflow: visible; }
+    .icon--free img {
+      width: 116%;
+      height: 116%;
+      object-fit: contain;
+      margin: -8%;
+    }
+
+    .card-title { min-width: 0; }
+    .card-title h3 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.25;
+    }
+    .platforms {
+      margin-top: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-3);
+      letter-spacing: 0.2px;
+    }
+
+    .card .desc {
+      position: relative;
+      margin-top: 16px;
+      font-size: 14.5px;
       line-height: 1.6;
-      margin-bottom: 20px;
+      color: var(--text-2);
+      flex: 1;
     }
-    .product-card .product-link-text {
-      font-size: 14px;
+
+    .card-foot {
+      position: relative;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
       font-weight: 600;
-      color: #00AFB9;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .status::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: none;
+    }
+    .status--live {
+      color: #35D6A4;
+      background: rgba(53,214,164,0.1);
+      border-color: rgba(53,214,164,0.26);
+    }
+    .status--soon {
+      color: #FFC75F;
+      background: rgba(255,199,95,0.08);
+      border-color: rgba(255,199,95,0.22);
+    }
+
+    .more {
+      margin-left: auto;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--accent);
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
-    .product-card .product-link-text svg {
-      width: 16px;
-      height: 16px;
-      transition: transform 0.3s;
+    .more svg { width: 15px; height: 15px; transition: transform 0.3s; }
+    .card:hover .more svg { transform: translateX(4px); }
+
+    /* ---------- Contact ---------- */
+    .contact { text-align: center; padding-top: 56px; padding-bottom: 40px; }
+    .contact p {
+      margin: 16px auto 0;
+      font-size: 16px;
+      color: var(--text-2);
+      max-width: 480px;
+      line-height: 1.6;
     }
-    .product-card:hover .product-link-text svg {
-      transform: translateX(4px);
+    .mail {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 24px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #06202B;
+      background: linear-gradient(135deg, var(--teal), #4DC3CC);
+      box-shadow: 0 12px 28px rgba(0,175,185,0.25);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .mail:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(0,175,185,0.32);
     }
 
-    /* Footer */
-    .footer-section {
-      min-height: auto;
-      padding: 48px 24px;
-      text-align: center;
-    }
+    /* ---------- Footer ---------- */
+    .footer { padding: 40px 0 56px; text-align: center; }
     .footer-divider {
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      max-width: 400px;
-      margin: 0 auto 32px;
+      max-width: 420px;
+      margin: 0 auto 28px;
     }
-    .footer-text {
-      font-size: 13px;
-      color: rgba(255,255,255,0.2);
-      letter-spacing: 0.5px;
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      justify-content: center;
+      margin-bottom: 18px;
     }
-    .footer-text a {
-      color: rgba(255,255,255,0.3);
+    .footer-links a {
+      font-size: 13.5px;
+      color: var(--text-3);
       text-decoration: none;
       transition: color 0.3s;
     }
-    .footer-text a:hover {
-      color: rgba(255,255,255,0.5);
+    .footer-links a:hover { color: rgba(255,255,255,0.75); }
+    .footer-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.4px;
     }
+    .footer-text a { color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer-text a:hover { color: rgba(255,255,255,0.65); }
 
     @keyframes appear {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Responsive */
-    @media (max-width: 480px) {
-      .hero h1 { font-size: 36px; }
-      .hero .tagline { font-size: 17px; }
-      .about h2, .products h2 { font-size: 26px; }
-      .product-card { padding: 32px 24px; }
+    /* ---------- Responsive ---------- */
+    @media (max-width: 720px) {
+      .topnav a { padding: 8px 9px; font-size: 13px; }
+      .cat-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { padding: 0 18px; }
+      .section { padding: 56px 0; }
+      .brand-name { display: none; }
+      .card { padding: 22px 20px 20px; }
+      .icon { width: 60px; height: 60px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
@@ -456,20 +656,47 @@
     <div class="star s10"></div>
   </div>
 
-  <div class="content">
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark">A</span>
+        <span class="brand-name">Azentix</span>
+      </a>
+      <nav class="topnav">
+        <a href="#social">Social</a>
+        <a href="#games">Games</a>
+        <a href="#mac">Mac apps</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="content" id="top">
 
     <!-- Hero -->
     <section class="hero">
-      <div class="section-inner">
+      <div class="wrap">
         <div class="hero-logo">
           <div class="hero-logo-glass">
             <span class="hero-logo-text">A</span>
           </div>
         </div>
-        <h1>
-          <span class="accent">Azentix</span>
-        </h1>
+        <h1><span class="accent">Azentix</span></h1>
         <p class="tagline">We build apps that connect people</p>
+
+        <div class="hero-chips">
+          <a class="chip cat-social" href="#social">
+            <span class="dot"></span> Social apps <span class="count">1</span>
+          </a>
+          <a class="chip cat-games" href="#games">
+            <span class="dot"></span> Games <span class="count">2</span>
+          </a>
+          <a class="chip cat-mac" href="#mac">
+            <span class="dot"></span> Mac apps <span class="count">2</span>
+          </a>
+        </div>
+
         <div class="scroll-hint">
           <a href="#about">
             Learn more
@@ -482,100 +709,177 @@
     </section>
 
     <!-- About -->
-    <section class="about" id="about">
-      <div class="section-inner">
+    <section class="section about" id="about">
+      <div class="wrap">
         <p class="section-label">About</p>
         <h2>A small studio with big ideas</h2>
-        <p>We're a Ukrainian tech studio focused on building mobile apps that bring people together. From discovering events nearby to meeting new friends, we create tools that make real-world connections happen.</p>
+        <p class="lead">We're a Ukrainian tech studio. We build social apps that get people to meet in the real world, games you can play on the train or at a loud table, and quiet Mac utilities that respect your machine and your privacy.</p>
+        <div class="facts">
+          <div class="fact"><b>5</b><span>products shipped &amp; in the works</span></div>
+          <div class="fact"><b>3 platforms</b><span>iOS · Android · macOS</span></div>
+          <div class="fact"><b>Made in Ukraine</b><span>built by a small team</span></div>
+        </div>
       </div>
     </section>
 
     <!-- Products -->
-    <section class="products" id="products">
-      <div class="section-inner">
-        <p class="section-label">Products</p>
-        <h2>What we've built</h2>
-        <div class="product-list">
-        <a class="product-card" href="/whotohangout">
-          <div class="card-glow"></div>
-          <div class="product-icon">
-            <svg viewBox="80 200 900 680" xmlns="http://www.w3.org/2000/svg">
-              <path fill="rgba(255,255,255,0.85)" d="M607 488c.6.285 1.2.57 1.82.862 16.73 7.942 32.25 17.43 45.903 30.048a144 144 0 0 0 5.965 5.153c3.18 2.703 5.871 5.701 8.566 8.882a136 136 0 0 0 3.46 3.922C677.84 542.47 681.92 548.61 686 555l2.004 3.063c23.95 37.495 31.083 83.105 21.894 126.445C703.424 712.577 690.018 740.98 670 762h-2v2h-2l-.64 1.648c-1.856 3.21-4.396 5.506-7.11 7.977l-1.738 1.59c-6.118 5.491-12.69 10.217-19.512 14.785-.924.625-1.849 1.25-2.8 1.895-7.452 4.89-15.267 9.063-23.2 13.105l-2.805 1.441c-21.439 10.394-47.339 14.958-70.954 14.82-2.173-.011-4.346 0-6.52.012-14.048.017-27.519-1.874-41.158-5.273l-3.604-.89c-9.519-2.477-18.452-5.86-27.408-9.909l-2.797-1.26-2.428-1.134c-2.63-.912-4.56-1.074-7.326-.807-2.762 1.723-2.762 1.723-5.687 4.063q-1.608 1.26-3.22 2.515c-1.02.8-2.041 1.599-3.093 2.422a297 297 0 0 1-4.687 3.313 1676 1676 0 0 0-13.188 9.25q-7.025 4.967-14.07 9.902l-2.52 1.765a1699 1699 0 0 1-5.07 3.527c-4.114 2.859-8.176 5.758-12.16 8.798l-2.266 1.695a179 179 0 0 0-4.133 3.195c-4.576 3.4-8.063 4.094-13.745 3.961C360 856 360 856 357.437 853.688c-2.54-4.75-2.58-8.813-2.57-14.072l-.008-2.624q-.007-4.37-.004-8.74l-.01-6.252q-.014-8.512-.012-17.023l-.006-10.645q-.013-18.583-.012-37.165-.001-17.292-.026-34.584-.019-14.86-.018-29.72.002-8.87-.013-17.737-.014-8.357-.003-16.714.003-3.053-.007-6.106c-.118-42.432 12.894-82.555 39.729-115.786C396 535 396 535 398 535l.762-1.754c1.394-2.529 2.976-4.18 5.05-6.183l2.176-2.118L408 523l2.5-2.562C460.186 471.993 544.332 457.45 607 488"/>
-              <path fill="rgba(255,255,255,0.65)" d="m844 509 2.406.779c15.008 5.033 28.562 12.471 41.02 22.21a127 127 0 0 0 6.824 4.948L897 539v2l1.688.688c2.964 1.682 4.936 3.87 7.312 6.312l2.324 2.367C919.414 562.135 927.226 575.392 934 590l1.43 2.973c7.391 16.321 10.972 35.508 10.945 53.34l-.005 3.383c-.22 15.297-2.487 31.097-8.37 45.304l-.796 1.992c-7.588 18.848-19.34 38.613-35.388 51.512-2.669 2.198-4.998 4.7-7.37 7.21C893 757 893 757 891 757l.02 2.383q.09 11.143.135 22.288.022 5.73.071 11.457.048 5.535.059 11.068.008 2.106.032 4.211c.154 13.855.154 13.855-3.317 19.593-3.182 2.024-6.273 2.205-10 2-3.378-1.139-6.21-2.91-9.191-4.846-2.139-1.365-4.314-2.658-6.496-3.95-9.502-5.63-18.924-11.39-28.313-17.204a881 881 0 0 0-9.652-5.906 104 104 0 0 1-6.727-4.563c-9.197-6.537-16.63-7.318-27.758-7.37-6.179-.066-12.102-.946-18.176-2.036l-2.835-.491C751.897 780.506 733.885 773.214 720 763l-2.617-1.883c-6.221-4.632-6.221-4.632-7.383-8.117.68-2.031.68-2.031 1.875-4.5l1.398-2.945L715 742c10.238-21.213 19.228-42.54 21.676-66.2C737 673 737 673 738 670c.11-1.355.168-2.715.193-4.075l.048-2.487.032-2.696.038-2.811q.046-4.528.064-9.056l.014-3.095c.025-15.848-1.06-30.46-5.389-45.78l-.708-2.705c-1.694-6.445-3.703-12.721-5.98-18.982l-1.043-2.876c-3.156-8.488-7.063-16.433-11.269-24.437-4.08-8.025-4.08-8.025-3.75-12.062L711 537l3-1v-2c3.452-2.64 7.265-4.782 11-7l1.866-1.11c14.363-8.466 28.97-14.77 45.134-18.89l3.7-.977c21.871-4.81 47.07-3.919 68.3 2.977m-581.312-5.5 2.175-.006c14.006.026 26.778 2.185 40.137 6.506l2.778.876C325.322 516.551 348.1 526.363 359 542l-1.504 2.938c-7.942 15.618-14.484 31.186-19.796 47.9a143 143 0 0 1-1.77 5.084c-1.408 4.66-2.174 9.409-2.993 14.203l-.525 2.938-.51 2.945-.453 2.614c-1.286 9.676-1.598 19.302-1.607 29.054l-.023 6.034q-.011 3.203-.018 6.407-.018 6.702-.053 13.403c-.062 12.695-.116 25.39-.15 38.084a6620 6620 0 0 1-.087 21.094 2205 2205 0 0 0-.04 11.139c-.002 4.131-.027 8.262-.054 12.393l.009 3.714-.034 3.41-.01 2.956c-.453 3.19-1.525 5.081-3.382 7.69-20.377 14.82-58.6 14.763-82.086 11.203-4.698-.849-9.308-1.952-13.914-3.203l-2.906-.723c-2.417-.655-4.74-1.425-7.094-2.277l-3.293-1.168C190.477 769.965 166.609 752.729 150 730l-1.213-1.658c-22.688-31.41-30.732-69.386-25.195-107.502 3.654-22.655 13.725-45.226 28.408-62.84l1.253-1.554c26.866-33.318 66.489-52.861 109.435-52.946"/>
-              <path fill="rgba(255,255,255,0.7)" d="M582 249l2.139 1.117c5.381 2.874 10.148 6.141 14.861 10.008l2.09 1.703c5.064 4.228 9.228 8.656 13.21 13.93 1.7 2.242 1.7 2.242 3.25 3.73 10.247 10.689 17.06 30.663 18.575 45.075l.253 2.387c2.715 27.385-3.318 55.183-20.828 76.844-21.227 25.138-47.668 37.305-80.05 40.558-26.825 1.225-54.487-11.12-74.115-28.807-20.027-18.568-32.28-44.014-33.514-71.404-.334-17.928 2.603-34.225 11.129-50.141l1.313-3.375c9.007-19.35 27.172-33.99 45.687-43.625l2.629-1.43c29.064-14.646 65.244-11.725 93.371 3.43m-319.695 62.554c1.994.008 3.988-.022 5.982-.052 22.997.011 42.56 10.114 58.713 25.935 5.37 5.43 9.224 10.394 12 17.563q1.56 3.158 3.125 6.312c5.121 10.367 6.44 21.492 6.375 32.938l-.015 3.559c-.453 22.731-10.719 42.281-26.981 57.972-3.607 3.196-7.332 5.818-11.504 8.219l-2.152 1.262c-19.26 10.436-43.648 14.925-65.047 9.351-23.037-7.122-41.732-21.136-53.34-42.437-9.43-19.815-12.132-43.09-5.197-64.169 8.49-23.143 24.294-39.929 46.455-50.277 2.403-1.015 4.814-1.883 7.281-2.73l2.338-.806c7.341-2.263 14.308-2.69 21.967-2.64m540.383-.054 3.999.015c10.235.183 18.91 1.49 28.313 5.485l3.297 1.387c21.66 10.032 36.338 27.205 44.73 49.222 2.584 9.008 3.362 17.793 3.348 27.141l-.005 3.453c-.128 8.846-1.21 16.474-4.37 24.797l-.945 2.547c-.913 2.225-1.934 4.326-3.055 6.453l-1.164 2.309c-10.558 19.295-29.668 33.108-50.432 39.489-7.59 2.097-14.734 2.747-22.591 2.702l-3.577-.017c-23.422-.476-42.95-11.275-59.377-27.612-13.652-14.592-21.237-33.713-20.935-53.776.414-11.448 1.52-22.474 6.076-33.095l1.242-2.937c8.081-17.533 22.583-33.04 40.446-40.688l1.912-.867c10.81-4.705 21.36-6.066 33.087-6.008"/>
-            </svg>
+    <section class="section section-products" id="products">
+      <div class="wrap">
+
+        <!-- Social -->
+        <div class="cat cat-social" id="social">
+          <div class="cat-head">
+            <h2>Social apps</h2>
+            <p>Meeting people, offline.</p>
           </div>
-          <h3>Who To Hangout</h3>
-          <p class="product-desc">Discover events nearby, meet new people, and find the best places to hang out in your city.</p>
-          <span class="product-link-text">
-            Learn more
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </span>
-        </a>
-        <a class="product-card" href="/mactune/">
-          <div class="card-glow"></div>
-          <div class="product-icon app-icon"><img src="/mactune/img/icon.png" alt=""></div>
-          <h3>Azentix MacTune</h3>
-          <p class="product-desc">Clean, tune and guard your Mac: junk cleaner, uninstaller, and per-app internet limits with Hotspot Guard.</p>
-          <span class="product-link-text">
-            Learn more
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </span>
-        </a>
-        <a class="product-card" href="/pulse/">
-          <div class="card-glow"></div>
-          <div class="product-icon app-icon"><img src="/pulse/img/icon.png" alt=""></div>
-          <h3>Azentix Pulse</h3>
-          <p class="product-desc">See where your time on the Mac goes: time per app, day, week and month charts, right in your menu bar. Private, on your Mac.</p>
-          <span class="product-link-text">
-            Learn more
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </span>
-        </a>
-        <a class="product-card" href="/dykepole/">
-          <div class="card-glow"></div>
-          <div class="product-icon app-icon"><img src="/dykepole/img/icon.png" alt=""></div>
-          <h3>Dyke Pole: Legends</h3>
-          <p class="product-desc">A turn-based RPG born from Ukrainian folklore: Cossacks, mavkas and witches, online duels and your own homestead in the steppe.</p>
-          <span class="product-link-text">
-            Learn more
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </span>
-        </a>
-        <a class="product-card" href="/kaboom/">
-          <div class="card-glow"></div>
-          <div class="product-icon app-icon"><img src="/kaboom/img/icon.png" alt=""></div>
-          <h3>Kaboom: Raccoons &amp; Dynamite</h3>
-          <p class="product-desc">A fast party card game of survival: dodge the dynamite, steal with raccoon pairs, play offline against bots or online with friends.</p>
-          <span class="product-link-text">
-            Learn more
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </span>
-        </a>
+          <div class="cards">
+            <a class="card" href="/whotohangout">
+              <div class="card-head">
+                <div class="icon icon--bleed"><img src="/whotohangout/img/icon.png" alt="Who To Hangout app icon" loading="lazy" width="512" height="512"></div>
+                <div class="card-title">
+                  <h3>Who To Hangout</h3>
+                  <p class="platforms">iPhone · Android</p>
+                </div>
+              </div>
+              <p class="desc">Discover events nearby, meet new people, and find the best places to hang out in your city.</p>
+              <div class="card-foot">
+                <span class="status status--live">On the App Store &amp; Google Play</span>
+                <span class="more">Learn more
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Games -->
+        <div class="cat cat-games" id="games">
+          <div class="cat-head">
+            <h2>Games</h2>
+            <p>Play offline, or against the whole table.</p>
+          </div>
+          <div class="cards">
+            <a class="card" href="/dykepole/">
+              <div class="card-head">
+                <div class="icon icon--bleed icon--zoom"><img src="/dykepole/img/icon.png" alt="Dyke Pole: Legends game icon" loading="lazy" width="256" height="256"></div>
+                <div class="card-title">
+                  <h3>Dyke Pole: Legends</h3>
+                  <p class="platforms">iPhone · Free to play</p>
+                </div>
+              </div>
+              <p class="desc">A turn-based RPG born from Ukrainian folklore: Cossacks, mavkas and witches, online duels and your own homestead in the steppe.</p>
+              <div class="card-foot">
+                <span class="status status--soon">Coming to the App Store</span>
+                <span class="more">Learn more
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+
+            <a class="card" href="/kaboom/">
+              <div class="card-head">
+                <div class="icon icon--bleed"><img src="/kaboom/img/icon.png" alt="Kaboom: Raccoons &amp; Dynamite game icon" loading="lazy" width="512" height="512"></div>
+                <div class="card-title">
+                  <h3>Kaboom: Raccoons &amp; Dynamite</h3>
+                  <p class="platforms">iPhone · Free to play</p>
+                </div>
+              </div>
+              <p class="desc">A fast party card game of survival: dodge the dynamite, steal with raccoon pairs, play offline against bots or online with friends.</p>
+              <div class="card-foot">
+                <span class="status status--soon">Coming to the App Store</span>
+                <span class="more">Learn more
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Mac apps -->
+        <div class="cat cat-mac" id="mac">
+          <div class="cat-head">
+            <h2>Mac apps</h2>
+            <p>Native utilities. No account, nothing leaves your Mac.</p>
+          </div>
+          <div class="cards">
+            <a class="card" href="/mactune/">
+              <div class="card-head">
+                <div class="icon icon--free"><img src="/mactune/img/icon.png" alt="Azentix MacTune app icon" loading="lazy" width="256" height="256"></div>
+                <div class="card-title">
+                  <h3>Azentix MacTune</h3>
+                  <p class="platforms">macOS · Free &amp; open source</p>
+                </div>
+              </div>
+              <p class="desc">Clean, tune and guard your Mac: junk cleaner, uninstaller, and per-app internet limits with Hotspot Guard.</p>
+              <div class="card-foot">
+                <span class="status status--soon">Coming soon</span>
+                <span class="more">Learn more
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+
+            <a class="card" href="/pulse/">
+              <div class="card-head">
+                <div class="icon icon--free"><img src="/pulse/img/icon.png" alt="Azentix Pulse app icon" loading="lazy" width="512" height="512"></div>
+                <div class="card-title">
+                  <h3>Azentix Pulse</h3>
+                  <p class="platforms">macOS · One-time purchase</p>
+                </div>
+              </div>
+              <p class="desc">See where your time on the Mac goes: time per app, day, week and month charts, right in your menu bar. Private, on your Mac.</p>
+              <div class="card-foot">
+                <span class="status status--soon">Coming to the Mac App Store</span>
+                <span class="more">Learn more
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+
       </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact" id="contact">
+      <div class="wrap">
+        <p class="section-label">Contact</p>
+        <h2>Say hello</h2>
+        <p>Questions, bug reports, press or partnership — we read every message.</p>
+        <a class="mail" href="mailto:contact@azentix.net">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="3"/><polyline points="3 7 12 13 21 7"/>
+          </svg>
+          contact@azentix.net
+        </a>
       </div>
     </section>
 
     <!-- Footer -->
-    <div class="footer-section">
-      <div class="footer-divider"></div>
-      <p class="footer-text">&copy; 2025 Azentix &middot; <a href="mailto:contact@azentix.net">contact@azentix.net</a></p>
-    </div>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-divider"></div>
+        <div class="footer-links">
+          <a href="/whotohangout">Who To Hangout</a>
+          <a href="/dykepole/">Dyke Pole: Legends</a>
+          <a href="/kaboom/">Kaboom</a>
+          <a href="/mactune/">MacTune</a>
+          <a href="/pulse/">Pulse</a>
+        </div>
+        <p class="footer-text">&copy; 2026 Azentix &middot; <a href="mailto:contact@azentix.net">contact@azentix.net</a></p>
+      </div>
+    </footer>
 
   </div>
 
